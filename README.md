@@ -36,9 +36,11 @@ Listener(常驻) → 队列(幂等去重) → Worker → Workflow
 pip install -r email_agent/requirements.txt   # 生产依赖 (Strands)
 ```
 
-离线运行（无需真实邮箱 / Bedrock）：设 `EMAIL_AGENT_USE_LLM=false`（默认），
-即用规则桩分类器 + `tools/adapters.py` 中的 Fake 适配器，可直接把 `EmailWorkflow`
-接到 `worker.Worker` 上驱动。
+离线端到端演示（无需真实邮箱 / Bedrock，用桩分类器 + Fake 适配器）：
+
+```bash
+python -m email_agent.demo
+```
 
 ## 配置（环境变量）
 
@@ -61,7 +63,8 @@ email_agent/
 ├── tools/        # Mailer / KB / Escalator 适配器 (+ Fake)
 ├── common/       # 数据模型 + 安全净化
 ├── config.py     # 配置开关
-└── worker.py     # 队列消费
+├── worker.py     # 队列消费
+└── demo.py       # 离线端到端演示入口
 ```
 
 > ⚠️ 本仓库为设计演示：默认开启人工审核门，上线前请完善提示注入防护、附件沙箱、真实发信/工单集成与评测。
